@@ -31,3 +31,9 @@ class List:
     def __getitem__(self, index):
         self._consume_up_to(index)
         return self._list[index]
+
+    def __setitem__(self, index, value):
+        self._consume_up_to(index)
+        self._list[index] = value
+        
+
