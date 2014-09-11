@@ -21,7 +21,7 @@ class List:
             while True:
                 self._consume_next()
         except IndexError:
-            self._exhausted = True
+            pass
 
     def _consume_up_to(self, index):
         if index < 0:
