@@ -22,6 +22,12 @@ class TestGetItem(unittest.TestCase):
         lazy[range_size - 1]
         self.assertEqual(len(lazy._list), range_size)
 
+    def test_negative_index(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        for i in range(range_size):
+            self.assertEqual(lazy[-(i + 1)], range_size - i)
+
 
 class TestSetItem(unittest.TestCase):
     def test_zero_out(self):
