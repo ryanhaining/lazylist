@@ -32,5 +32,13 @@ class TestSetItem(unittest.TestCase):
         for i in range(range_size):
             self.assertEqual(lazy[i], 0)
 
+
+class TestDelItem(unittest.TestCase):
+    def test_remove_middle(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        del lazy[4]
+        self.assertEqual(lazy[3] + 2, lazy[4])
+
 if __name__ == '__main__':
     unittest.main()
