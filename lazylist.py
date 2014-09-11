@@ -35,6 +35,7 @@ class List:
         self._list[index] = value
 
     def __delitem__(self, index):
+        self._consume_up_to(index)
         del self._list[index]
         
     def __len__(self):
