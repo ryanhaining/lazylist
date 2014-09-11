@@ -21,7 +21,8 @@ class List:
 
     def _consume_up_to(self, index):
         if index < 0:
-            raise ValueError('negative indices not supported')
+            self._consume_rest()
+            return
         to_consume = index - len(self._list) + 1
         for i in range(to_consume):
             self._consume_next()
