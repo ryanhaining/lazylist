@@ -40,10 +40,24 @@ class TestDelItem(unittest.TestCase):
         del lazy[4]
         self.assertEqual(lazy[3] + 2, lazy[4])
 
+
 class TestLen(unittest.TestCase):
     def test_lens(self):
         seq = list(range(10))
         self.assertEqual(len(seq), len(lazylist.List(seq)))
+
+
+class TestContains(unittest.TestCase):
+    def test_range(self):
+        range_min = 10
+        range_max = 20
+        lazy = lazylist.List(range(range_min, range_max))
+        for i in range(range_min, range_max):
+            self.assertTrue(i in lazy)
+        for i in range(0, range_min):
+            self.assertFalse(i in lazy)
+        for i in range(range_max, range_max + 10):
+            self.assertFalse(i in lazy)
 
 if __name__ == '__main__':
     unittest.main()
