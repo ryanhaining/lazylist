@@ -15,7 +15,6 @@ class List:
             self._exhausted = True
             raise IndexError
 
-
     def _consume_rest(self):
         try:
             while True:
@@ -38,4 +37,6 @@ class List:
         self._consume_up_to(index)
         self._list[index] = value
         
-
+    def __len__(self):
+        self._consume_rest()
+        return len(self._list)
