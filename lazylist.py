@@ -24,6 +24,8 @@ class List:
             self._exhausted = True
 
     def _consume_up_to(self, index):
+        if index < 0:
+            raise ValueError('negative indices not supported')
         to_consume = index - self.consumed + 1
         for i in range(to_consume):
             self._consume_next()
