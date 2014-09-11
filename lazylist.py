@@ -2,14 +2,14 @@ class List:
     def __init__(self, iterable):
         self._iterable = iter(iterable)
         self._list = list()
-        self._exhausted = False
 
     def _consume_next(self):
+        exhausted = False
         try:
             self._list.append(next(self._iterable))
         except StopIteration:
-            self._exhausted = True
-        if self._exhausted:
+            exhausted = True
+        if exhausted:
             raise IndexError
 
     def _consume_rest(self):
@@ -42,3 +42,12 @@ class List:
     def __len__(self):
         self._consume_rest()
         return len(self._list)
+
+    def __bool__(self):
+        if self._list:
+            return True
+        try:
+            self._consume_next()
+            return True
+        except IndexError:
+            return False
