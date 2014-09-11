@@ -26,7 +26,7 @@ class TestGetItem(unittest.TestCase):
         range_size = 10
         lazy = lazylist.List(range(range_size))
         for i in range(range_size):
-            self.assertEqual(lazy[-(i + 1)], range_size - i)
+            self.assertEqual(lazy[-(i + 1)], range_size - i - 1)
 
 
 class TestSetItem(unittest.TestCase):
