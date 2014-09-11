@@ -65,5 +65,14 @@ class TestContains(unittest.TestCase):
         for i in range(range_max, range_max + 10):
             self.assertFalse(i in lazy)
 
+class TestBool(unittest.TestCase):
+    def test_for_false(self):
+        self.assertFalse(lazylist.List(range(0)))
+        self.assertFalse(lazylist.List([]))
+
+    def test_for_true(self):
+        self.assertTrue(lazylist.List(range(1)))
+        self.assertTrue(lazylist.List([1]))
+
 if __name__ == '__main__':
     unittest.main()
