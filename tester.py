@@ -5,10 +5,6 @@ import unittest
 import lazylist
 
 class TestGetItem(unittest.TestCase):
-    def setUp(self):
-        pass
-        #self.lazy = lazylist.List(range(20, 30))
-    
     def test_incremental(self):
         range_size = 10
         lazy = lazylist.List(range(range_size))
@@ -25,6 +21,7 @@ class TestGetItem(unittest.TestCase):
         lazy = lazylist.List(range(range_size))
         lazy[range_size - 1]
         self.assertEqual(len(lazy._list), range_size)
+
 
 
 if __name__ == '__main__':
