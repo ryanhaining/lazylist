@@ -9,6 +9,7 @@ class List:
             self._list.append(next(self._iterable))
         except StopIteration:
             self._exhausted = True
+        if self._exhausted:
             raise IndexError
 
     def _consume_rest(self):
