@@ -23,6 +23,14 @@ class TestGetItem(unittest.TestCase):
         self.assertEqual(len(lazy._list), range_size)
 
 
+class TestSetItem(unittest.TestCase):
+    def test_zero_out(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        for i in range(range_size):
+            lazy[i] = 0
+        for i in range(range_size):
+            self.assertEqual(lazy[i], 0)
 
 if __name__ == '__main__':
     unittest.main()
