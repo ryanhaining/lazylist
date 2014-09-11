@@ -13,11 +13,7 @@ class List:
             raise IndexError
 
     def _consume_rest(self):
-        try:
-            while True:
-                self._consume_next()
-        except IndexError:
-            pass
+        self._list.extend(self._iterable)
 
     def _consume_up_to(self, index):
         if index < 0:
