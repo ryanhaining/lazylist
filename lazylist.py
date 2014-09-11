@@ -4,10 +4,6 @@ class List:
         self._list = list()
         self._exhausted = False
 
-    @property
-    def consumed(self):
-        return len(self._list)
-
     def _consume_next(self):
         try:
             self._list.append(next(self._iterable))
@@ -25,7 +21,7 @@ class List:
     def _consume_up_to(self, index):
         if index < 0:
             raise ValueError('negative indices not supported')
-        to_consume = index - self.consumed + 1
+        to_consume = index - len(self._list) + 1
         for i in range(to_consume):
             self._consume_next()
 
@@ -36,6 +32,9 @@ class List:
     def __setitem__(self, index, value):
         self._consume_up_to(index)
         self._list[index] = value
+
+    def __delitem__(self, index):
+        del self._list[index]
         
     def __len__(self):
         self._consume_rest()
