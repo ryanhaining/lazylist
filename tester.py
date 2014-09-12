@@ -74,5 +74,20 @@ class TestBool(unittest.TestCase):
         self.assertTrue(lazylist.List(range(1)))
         self.assertTrue(lazylist.List([1]))
 
+class TestExtend(unittest.TestCase):
+    def test_two_range(self):
+        lazy = lazylist.List(range(10))
+        lazy[3]
+        lazy.extend(range(10, 20))
+        for i in range(20):
+            self.assertEqual(lazy[i], i)
+
+    def test_iadd(self):
+        lazy = lazylist.List(range(10))
+        lazy[3]
+        lazy += range(10, 20)
+        for i in range(20):
+            self.assertEqual(lazy[i], i)
+
 if __name__ == '__main__':
     unittest.main()
