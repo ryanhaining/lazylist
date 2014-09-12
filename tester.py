@@ -94,5 +94,28 @@ class TestRepr(unittest.TestCase):
         lazy = lazylist.List(range(3))
         self.assertEqual(repr(lazy), '[0, 1, 2]')
 
+class TestEquality(unittest.TestCase):
+    def test_should_equal(self):
+        a = lazylist.List(range(3))
+        b = lazylist.List(range(3))
+        self.assertTrue(a == b)
+        self.assertFalse(a != b)
+
+    def test_totally_different(self):
+        a = lazylist.List(range(3))
+        b = lazylist.List(range(3, 10))
+        self.assertFalse(a == b)
+        self.assertEqual(len(a._list), 1)
+        self.assertEqual(len(b._list), 1)
+        self.assertTrue(a != b)
+
+    def test_different_length(self):
+        range_size = 10
+        a = lazylist.List(range(range_size))
+        b = lazylist.List(range(range_size + 1))
+        self.assertFalse(a == b)
+        self.assertTrue(a != b)
+
+
 if __name__ == '__main__':
     unittest.main()
