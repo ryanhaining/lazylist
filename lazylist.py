@@ -56,4 +56,7 @@ class List:
     def __iadd__(self, rest):
         self.extend(rest)
         return self
-
+    
+    def __repr__(self):
+        self._consume_rest()
+        return '[' + ', '.join(repr(item) for item in self._list) + ']'
