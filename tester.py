@@ -28,7 +28,6 @@ class TestGetItem(unittest.TestCase):
         for i in range(range_size):
             self.assertEqual(lazy[-(i + 1)], range_size - i - 1)
 
-
 class TestSetItem(unittest.TestCase):
     def test_zero_out(self):
         range_size = 10
@@ -37,6 +36,18 @@ class TestSetItem(unittest.TestCase):
             lazy[i] = 0
         for i in range(range_size):
             self.assertEqual(lazy[i], 0)
+
+    def test_slice_assign(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        seq = list(range(range_size))
+        lazy[2:5] = [10,20,30,40,50,60]
+        seq[2:5] = [10,20,30,40,50,60]
+        for i, e in enumerate(seq):
+            self.assertEqual(lazy[i], e) 
+        
+
+
 
 
 class TestDelItem(unittest.TestCase):
