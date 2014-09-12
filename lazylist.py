@@ -1,3 +1,5 @@
+import itertools
+
 class List:
     def __init__(self, iterable):
         self._iterable = iter(iterable)
@@ -47,3 +49,11 @@ class List:
             return True
         except IndexError:
             return False
+
+    def extend(self, rest):
+        self._iterable = itertools.chain(self._iterable, iter(rest))
+
+    def __iadd__(self, rest):
+        self.extend(rest)
+        return self
+
