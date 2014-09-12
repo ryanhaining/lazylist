@@ -127,6 +127,13 @@ class TestEquality(unittest.TestCase):
         self.assertFalse(a == b)
         self.assertTrue(a != b)
 
+    def test_with_list(self):
+        range_size = 10
+        a = lazylist.List(range(range_size))
+        b = list(range(range_size))
+        self.assertTrue(a == b)
+        self.assertFalse(a != b)
+
 
 if __name__ == '__main__':
     unittest.main()
