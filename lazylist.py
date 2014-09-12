@@ -5,6 +5,14 @@ class List:
         self._iterable = iter(iterable)
         self._list = list()
 
+    @property
+    def _exhausted(self):
+        try:
+            self._consume_next()
+            return False
+        except IndexError:
+            return True
+
     def _consume_next(self):
         exhausted = False
         try:
@@ -60,3 +68,9 @@ class List:
     def __repr__(self):
         self._consume_rest()
         return '[' + ', '.join(repr(item) for item in self._list) + ']'
+
+    def __eq__(self, other):
+        return (all(a == b for a, b in zip(self, other))
+                and self._exhausted
+                and other._exhausted
+                and len(self) == len(other))
