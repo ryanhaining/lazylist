@@ -25,13 +25,36 @@ class List:
     def _consume_rest(self):
         self._list.extend(self._iterable)
 
-    def _consume_up_to(self, index):
-        if index < 0:
+    def _consume_up_to_value(self, value):
+        if value < 0:
             self._consume_rest()
             return
-        to_consume = index - len(self._list) + 1
+        to_consume = value - len(self._list) + 1
         for i in range(to_consume):
             self._consume_next()
+    
+    def _slice_max(self, sl):
+        start, stop, step = sl.start, sl.stop, sl.step
+        if step == None:
+            step = 1
+        if step > 0 and stop > start:
+            return stop - ((stop - start) % step)
+        elif step < 0 and stop < start:
+            return stop + ((start - stop) % (-step))
+        else:
+            return 0
+
+    def _consume_up_to_slice(self, sl):
+        if sl.start < 0 or sl.stop < 0:
+            self._consume_rest()
+        else:
+            self._consume_up_to(self._slice_max(sl))
+
+    def _consume_up_to(self, index):
+        if isinstance(index, slice):
+            self._consume_up_to_slice(index)
+        else:
+            self._consume_up_to_value(index)
 
     def __getitem__(self, index):
         self._consume_up_to(index)
