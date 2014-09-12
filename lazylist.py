@@ -95,5 +95,5 @@ class List:
     def __eq__(self, other):
         return (all(a == b for a, b in zip(self, other))
                 and self._exhausted
-                and other._exhausted
+                and (isinstance(other, list) or other._exhausted)
                 and len(self) == len(other))
