@@ -89,5 +89,10 @@ class TestExtend(unittest.TestCase):
         for i in range(20):
             self.assertEqual(lazy[i], i)
 
+class TestRepr(unittest.TestCase):
+    def test_simple(self):
+        lazy = lazylist.List(range(3))
+        self.assertEqual(repr(lazy), '[0, 1, 2]')
+
 if __name__ == '__main__':
     unittest.main()
