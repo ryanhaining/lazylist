@@ -141,6 +141,14 @@ class TestReversed(unittest.TestCase):
         for i, v in zip(range(9, -1, -1), reversed(lazy)):
             self.assertEqual(i, v)
 
+    def test_in_place(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        lazy.reverse()
+        for i, v in zip(range(9, -1, -1), lazy):
+            self.assertEqual(i, v)
+
+
 class TestSort(unittest.TestCase):
     def test_sort(self):
         range_size = 10
