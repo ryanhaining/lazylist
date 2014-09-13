@@ -134,6 +134,13 @@ class TestEquality(unittest.TestCase):
         self.assertTrue(a == b)
         self.assertFalse(a != b)
 
+class TestReversed(unittest.TestCase):
+    def test_backwards_range(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        for i, v in zip(range(9, -1, -1), reversed(lazy)):
+            self.assertEqual(i, v)
+
 
 if __name__ == '__main__':
     unittest.main()
