@@ -157,5 +157,14 @@ class TestSort(unittest.TestCase):
         for i in range(len(lazy) - 1):
             self.assertLess(lazy[i], lazy[i] + 1) 
 
+class TestPop(unittest.TestCase):
+    def test_pop_default(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        for i in range(range_size):
+            self.assertEqual(len(lazy), range_size - i)
+            self.assertEqual(lazy.pop(), range_size - i - 1)
+            self.assertEqual(len(lazy), range_size - i - 1)
+
 if __name__ == '__main__':
     unittest.main()
