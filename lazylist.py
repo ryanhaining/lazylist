@@ -97,3 +97,7 @@ class List:
                 and self._exhausted
                 and (isinstance(other, list) or other._exhausted)
                 and len(self) == len(other))
+
+    def sort(self):
+        self._consume_rest()
+        self._list.sort()
