@@ -105,3 +105,9 @@ class List:
     def reverse(self):
         self._consume_rest()
         self._list.reverse()
+
+    def pop(self, index=-1):
+        self._consume_up_to(index)
+        item = self._list[index]
+        del self._list[index]
+        return item
