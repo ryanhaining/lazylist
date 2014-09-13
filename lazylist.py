@@ -101,3 +101,7 @@ class List:
     def sort(self):
         self._consume_rest()
         self._list.sort()
+
+    def reverse(self):
+        self._consume_rest()
+        self._list.reverse()
