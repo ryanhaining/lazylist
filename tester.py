@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import unittest
+import itertools
 
 import lazylist
 
@@ -189,6 +190,14 @@ class TestIndex(unittest.TestCase):
         self.assertEqual(lazy.index(2, 0, -2), 2)
         self.assertEqual(lazy.index(5, -7, -2), 5)
         
+
+class TestCount(unittest.TestCase):
+    def test_count(self):
+        range_size = 10
+        lazy = lazylist.List(
+            itertools.chain.from_iterable([i]*i for i in range(range_size)))
+        for i in range(range_size):
+            self.assertEqual(i, lazy.count(i))
 
 if __name__ == '__main__':
     unittest.main()
