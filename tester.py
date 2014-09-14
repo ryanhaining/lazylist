@@ -199,5 +199,21 @@ class TestCount(unittest.TestCase):
         for i in range(range_size):
             self.assertEqual(i, lazy.count(i))
 
+class TestRemove(unittest.TestCase):
+    def test_remove(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        for i in range(range_size):
+            lazy.remove(i)
+        self.assertEqual(len(lazy), 0)
+
+    def test_remove_fails(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        for i in range(range_size, range_size*2):
+            self.assertRaises(ValueError, lazy.remove, i)
+
+
+
 if __name__ == '__main__':
     unittest.main()
