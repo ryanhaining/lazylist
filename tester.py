@@ -172,5 +172,23 @@ class TestPop(unittest.TestCase):
             self.assertEqual(lazy.pop(), range_size - i - 1)
             self.assertEqual(len(lazy), range_size - i - 1)
 
+
+class TestIndex(unittest.TestCase):
+    def test_index(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        self.assertEqual(lazy.index(5), 5)
+        self.assertEqual(len(lazy._list), 6)
+        self.assertRaises(ValueError, lazy.index, 10)
+        self.assertRaises(ValueError, lazy.index, -1)
+
+    def test_index_with_bounds(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        self.assertEqual(lazy.index(9, 5), 9)
+        self.assertEqual(lazy.index(2, 0, -2), 2)
+        self.assertEqual(lazy.index(5, -7, -2), 5)
+        
+
 if __name__ == '__main__':
     unittest.main()
