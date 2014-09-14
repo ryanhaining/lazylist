@@ -141,3 +141,6 @@ class List:
     def count(self, item):
         self._consume_rest()
         return self._list.count(item)
+
+    def remove(self, item):
+        del self[self.index(item)]
