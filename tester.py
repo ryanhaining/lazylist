@@ -45,10 +45,16 @@ class TestSetItem(unittest.TestCase):
         seq[2:5] = [10,20,30,40,50,60]
         for i, e in enumerate(seq):
             self.assertEqual(lazy[i], e) 
+
+    def test_negtive_slice_assign(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        seq = list(range(range_size))
+        lazy[-2:-5] = [10,20,30,40,50,60]
+        seq[-2:-5] = [10,20,30,40,50,60]
+        for i, e in enumerate(seq):
+            self.assertEqual(lazy[i], e) 
         
-
-
-
 
 class TestDelItem(unittest.TestCase):
     def test_remove_middle(self):
