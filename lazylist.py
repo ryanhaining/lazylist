@@ -138,3 +138,6 @@ class List:
 
         raise ValueError('{} is not in list'.format(item))
 
+    def count(self, item):
+        self._consume_rest()
+        return self._list.count(item)
