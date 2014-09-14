@@ -13,6 +13,34 @@ class List:
         except IndexError:
             return True
 
+    def _slice_max(self, sl):
+        start, stop, step = sl.start, sl.stop, sl.step
+        if step == None:
+            step = 1
+        if step > 0 and stop > start:
+            return stop - ((stop - start) % step)
+        elif step < 0 and stop < start:
+            return stop + ((start - stop) % (-step))
+        else:
+            return 0
+
+    def _positive_index(self, value):
+        '''Returns positive list index for value
+
+        If value is None, returns None
+        If value is positive, it is returned.
+        If value is negative, it is converted to a positive index referring to
+        the same position
+        
+        '''
+        if value is None: return None
+        if value >= 0: return value
+        self._consume_rest()
+        pos = len(self._list) - abs(value)
+        if pos < 0:
+            raise IndexError('list index out of range')
+        return pos
+
     def _consume_next(self):
         exhausted = False
         try:
@@ -33,17 +61,6 @@ class List:
         for i in range(to_consume):
             self._consume_next()
     
-    def _slice_max(self, sl):
-        start, stop, step = sl.start, sl.stop, sl.step
-        if step == None:
-            step = 1
-        if step > 0 and stop > start:
-            return stop - ((stop - start) % step)
-        elif step < 0 and stop < start:
-            return stop + ((start - stop) % (-step))
-        else:
-            return 0
-
     def _consume_up_to_slice(self, sl):
         if sl.start < 0 or sl.stop < 0:
             self._consume_rest()
@@ -111,3 +128,13 @@ class List:
         item = self._list[index]
         del self._list[index]
         return item
+
+    def index(self, item, start=0, stop=None):
+        start = self._positive_index(start)
+        stop = self._positive_index(stop)
+        for i, e in enumerate(itertools.islice(self, start, stop)):
+            if e == item:
+                return i + start
+
+        raise ValueError('{} is not in list'.format(item))
+
