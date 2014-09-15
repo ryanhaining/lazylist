@@ -5,9 +5,11 @@ import itertools
 
 import lazylist
 
+range_size = 10
+
+
 class TestGetItem(unittest.TestCase):
     def test_incremental(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         for i in range(range_size):
             lazy[i]
@@ -18,20 +20,17 @@ class TestGetItem(unittest.TestCase):
             
 
     def test_all_at_once(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         lazy[range_size - 1]
         self.assertEqual(len(lazy._list), range_size)
 
     def test_negative_index(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         for i in range(range_size):
             self.assertEqual(lazy[-(i + 1)], range_size - i - 1)
 
 class TestSetItem(unittest.TestCase):
     def test_zero_out(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         for i in range(range_size):
             lazy[i] = 0
@@ -39,7 +38,6 @@ class TestSetItem(unittest.TestCase):
             self.assertEqual(lazy[i], 0)
 
     def test_slice_assign(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         seq = list(range(range_size))
         lazy[2:5] = [10,20,30,40,50,60]
@@ -48,7 +46,6 @@ class TestSetItem(unittest.TestCase):
             self.assertEqual(lazy[i], e) 
 
     def test_negtive_slice_assign(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         seq = list(range(range_size))
         lazy[-2:-5] = [10,20,30,40,50,60]
@@ -59,7 +56,6 @@ class TestSetItem(unittest.TestCase):
 
 class TestDelItem(unittest.TestCase):
     def test_remove_middle(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         del lazy[4]
         self.assertEqual(lazy[3] + 2, lazy[4])
@@ -128,14 +124,12 @@ class TestEquality(unittest.TestCase):
         self.assertTrue(a != b)
 
     def test_different_length(self):
-        range_size = 10
         a = lazylist.List(range(range_size))
         b = lazylist.List(range(range_size + 1))
         self.assertFalse(a == b)
         self.assertTrue(a != b)
 
     def test_with_list(self):
-        range_size = 10
         a = lazylist.List(range(range_size))
         b = list(range(range_size))
         self.assertTrue(a == b)
@@ -143,13 +137,11 @@ class TestEquality(unittest.TestCase):
 
 class TestReversed(unittest.TestCase):
     def test_backwards_range(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         for i, v in zip(range(9, -1, -1), reversed(lazy)):
             self.assertEqual(i, v)
 
     def test_in_place(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         lazy.reverse()
         for i, v in zip(range(9, -1, -1), lazy):
@@ -158,7 +150,6 @@ class TestReversed(unittest.TestCase):
 
 class TestSort(unittest.TestCase):
     def test_sort(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         lazy.sort()
         for i in range(len(lazy) - 1):
@@ -166,7 +157,6 @@ class TestSort(unittest.TestCase):
 
 class TestPop(unittest.TestCase):
     def test_pop_default(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         for i in range(range_size):
             self.assertEqual(len(lazy), range_size - i)
@@ -176,7 +166,6 @@ class TestPop(unittest.TestCase):
 
 class TestIndex(unittest.TestCase):
     def test_index(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         self.assertEqual(lazy.index(5), 5)
         self.assertEqual(len(lazy._list), 6)
@@ -184,7 +173,6 @@ class TestIndex(unittest.TestCase):
         self.assertRaises(ValueError, lazy.index, -1)
 
     def test_index_with_bounds(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         self.assertEqual(lazy.index(9, 5), 9)
         self.assertEqual(lazy.index(2, 0, -2), 2)
@@ -193,7 +181,6 @@ class TestIndex(unittest.TestCase):
 
 class TestCount(unittest.TestCase):
     def test_count(self):
-        range_size = 10
         lazy = lazylist.List(
             itertools.chain.from_iterable([i]*i for i in range(range_size)))
         for i in range(range_size):
@@ -201,21 +188,18 @@ class TestCount(unittest.TestCase):
 
 class TestRemove(unittest.TestCase):
     def test_remove(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         for i in range(range_size):
             lazy.remove(i)
         self.assertEqual(len(lazy), 0)
 
     def test_remove_fails(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         for i in range(range_size, range_size*2):
             self.assertRaises(ValueError, lazy.remove, i)
 
 class TestInsert(unittest.TestCase):
     def test_insert(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         lazy.insert(2, 'a')
         self.assertEqual(lazy[2], 'a')
@@ -223,7 +207,6 @@ class TestInsert(unittest.TestCase):
         self.assertEqual(lazy[10], 'b')
 
     def test_insert_negative(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size))
         lazy.insert(-1, 'c')
         self.assertEqual(lazy[-2], 'c')
@@ -231,12 +214,30 @@ class TestInsert(unittest.TestCase):
 
 class TestAppend(unittest.TestCase):
     def test_append(self):
-        range_size = 10
         lazy = lazylist.List(range(range_size // 2))
         for i in range(range_size // 2, range_size):
             lazy.append(i)
         for i, j in zip(lazy, range(range_size)):
             self.assertEqual(i, j)
+
+class TestClear(unittest.TestCase):
+    def test_unevaluated(self):
+        lazy = lazylist.List(range(range_size))
+        lazy.clear()
+        self.assertEqual(len(lazy), 0)
+
+    def test_evaluated(self):
+        lazy = lazylist.List(range(range_size))
+        len(lazy)
+        lazy.clear()
+        self.assertEqual(len(lazy), 0)
+
+    def test_clear_and_add(self):
+        lazy = lazylist.List(range(range_size))
+        lazy.clear()
+        self.assertEqual(len(lazy), 0)
+        lazy.extend(range(range_size))
+        self.assertEqual(len(lazy), range_size)
 
 if __name__ == '__main__':
     unittest.main()
