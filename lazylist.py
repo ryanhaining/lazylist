@@ -152,3 +152,7 @@ class List:
     def append(self, item):
         self._consume_rest()
         self._list.append(item)
+
+    def clear(self):
+        self._list.clear()
+        self._iterable = iter([])
