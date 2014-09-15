@@ -145,6 +145,10 @@ class List:
     def remove(self, item):
         del self[self.index(item)]
 
-    def insert(self, index, element):
+    def insert(self, index, item):
         self._consume_up_to(index)
-        self._list.insert(index, element)
+        self._list.insert(index, item)
+
+    def append(self, item):
+        self._consume_rest()
+        self._list.append(item)
