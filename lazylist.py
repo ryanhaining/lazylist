@@ -24,19 +24,19 @@ class List:
         else:
             return 0
 
-    def _positive_index(self, value):
-        '''Returns positive list index for value
+    def _positive_index(self, index):
+        '''Returns positive list index for index
 
-        If value is None, returns None
-        If value is positive, it is returned.
-        If value is negative, it is converted to a positive index referring to
+        If index is None, returns None
+        If index is positive, it is returned.
+        If index is negative, it is converted to a positive index referring to
         the same position
         
         '''
-        if value is None: return None
-        if value >= 0: return value
+        if index is None: return None
+        if index >= 0: return index
         self._consume_rest()
-        pos = len(self._list) - abs(value)
+        pos = len(self._list) - abs(index)
         if pos < 0:
             raise IndexError('list index out of range')
         return pos
@@ -53,11 +53,11 @@ class List:
     def _consume_rest(self):
         self._list.extend(self._iterable)
 
-    def _consume_up_to_value(self, value):
-        if value < 0:
+    def _consume_up_to_index(self, index):
+        if index < 0:
             self._consume_rest()
             return
-        to_consume = value - len(self._list) + 1
+        to_consume = index - len(self._list) + 1
         for i in range(to_consume):
             self._consume_next()
     
@@ -67,11 +67,11 @@ class List:
         else:
             self._consume_up_to(self._slice_max(sl))
 
-    def _consume_up_to(self, index):
-        if isinstance(index, slice):
-            self._consume_up_to_slice(index)
+    def _consume_up_to(self, key):
+        if isinstance(key, slice):
+            self._consume_up_to_slice(key)
         else:
-            self._consume_up_to_value(index)
+            self._consume_up_to_index(key)
 
     def __getitem__(self, index):
         self._consume_up_to(index)
@@ -144,3 +144,7 @@ class List:
 
     def remove(self, item):
         del self[self.index(item)]
+
+    def insert(self, index, element):
+        self._consume_up_to(index)
+        self._list.insert(index, element)
