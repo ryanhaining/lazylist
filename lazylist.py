@@ -154,5 +154,12 @@ class List:
         self._list.append(item)
 
     def clear(self):
+        '''Clears the list
+
+        Any unevaluated parts of the list will not be evaluated. This
+        behavior may produce unexpected results if the evaluation of
+        the remaining items has side effects.
+
+        '''
         self._list.clear()
         self._iterable = iter([])
