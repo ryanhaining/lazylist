@@ -45,7 +45,7 @@ class TestSetItem(unittest.TestCase):
         for i, e in enumerate(seq):
             self.assertEqual(lazy[i], e) 
 
-    def test_negtive_slice_assign(self):
+    def test_negative_slice_assign(self):
         lazy = lazylist.List(range(range_size))
         seq = list(range(range_size))
         lazy[-2:-5] = [10,20,30,40,50,60]
