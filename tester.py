@@ -239,5 +239,20 @@ class TestClear(unittest.TestCase):
         lazy.extend(range(range_size))
         self.assertEqual(len(lazy), range_size)
 
+class TestLessThan(unittest.TestCase):
+    def test_simple(self):
+        a = lazylist.List(range(1, range_size + 1))
+        b = lazylist.List(range(range_size))
+        self.assertTrue(b < a)
+        self.assertFalse(a < b)
+
+    def test_uneven(self):
+        a = lazylist.List(range(range_size))
+        b = lazylist.List(range(range_size - 1))
+        self.assertTrue(b < a)
+        self.assertFalse(a < b)
+
+
+
 if __name__ == '__main__':
     unittest.main()
