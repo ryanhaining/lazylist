@@ -213,6 +213,17 @@ class TestRemove(unittest.TestCase):
         for i in range(range_size, range_size*2):
             self.assertRaises(ValueError, lazy.remove, i)
 
+class TestInsert(unittest.TestCase):
+    def test_insert(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
+        lazy.insert(2, 'a')
+        self.assertEqual(lazy[2], 'a')
+        lazy.insert(10, 'b')
+        self.assertEqual(lazy[10], 'b')
+        lazy.insert(-1, 'c')
+        self.assertEqual(lazy[-2], 'c')
+
 
 
 if __name__ == '__main__':
