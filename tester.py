@@ -221,6 +221,10 @@ class TestInsert(unittest.TestCase):
         self.assertEqual(lazy[2], 'a')
         lazy.insert(10, 'b')
         self.assertEqual(lazy[10], 'b')
+
+    def test_insert_negative(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size))
         lazy.insert(-1, 'c')
         self.assertEqual(lazy[-2], 'c')
 
