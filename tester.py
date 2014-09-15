@@ -229,6 +229,14 @@ class TestInsert(unittest.TestCase):
         self.assertEqual(lazy[-2], 'c')
 
 
+class TestAppend(unittest.TestCase):
+    def test_append(self):
+        range_size = 10
+        lazy = lazylist.List(range(range_size // 2))
+        for i in range(range_size // 2, range_size):
+            lazy.append(i)
+        for i, j in zip(lazy, range(range_size)):
+            self.assertEqual(i, j)
 
 if __name__ == '__main__':
     unittest.main()
