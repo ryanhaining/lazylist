@@ -115,6 +115,23 @@ class List:
                 and (isinstance(other, list) or other._exhausted)
                 and len(self) == len(other))
 
+    def __lt__(self, other):
+        at_least_one_less = False
+        for a, b in zip(self, other):
+            if b < a: return False
+            if a < b: at_least_one_less = True
+
+        if at_least_one_less: return True
+        try:
+            self._consume_next()
+        except IndexError:
+            pass
+        try:
+            other._consume_next()
+        except IndexError:
+            pass
+        return len(self._list) < len(other._list)
+
     def sort(self):
         self._consume_rest()
         self._list.sort()
