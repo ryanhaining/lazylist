@@ -252,6 +252,13 @@ class TestLessThan(unittest.TestCase):
         self.assertTrue(b < a)
         self.assertFalse(a < b)
 
+    def test_unordered(self):
+        a = lazylist.List([1,9])
+        b = lazylist.List([2, -1])
+        self.assertTrue(a < b)
+        self.assertFalse(b < a)
+
+
 
 
 if __name__ == '__main__':
