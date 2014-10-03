@@ -119,9 +119,10 @@ class List:
         at_least_one_less = False
         for a, b in zip(self, other):
             if b < a: return False
-            if a < b: at_least_one_less = True
+            if a < b: return True
 
-        if at_least_one_less: return True
+        # at this point all elements in both lists are equal
+        # in this case, the shorter list is considered less
         try:
             self._consume_next()
         except IndexError:
